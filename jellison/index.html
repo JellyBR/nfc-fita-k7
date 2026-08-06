@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Dia dos Pais!</title>
     
-    <!-- Importação da fonte moderna do Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
@@ -14,21 +13,18 @@
         body {
             background-image: url('foto.jpg');
             background-size: cover;
-            background-position: center top; 
+            background-position: center; 
             background-color: #121212;
             margin: 0;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; 
-            /* Aqui avisamos o site para usar a nova fonte */
             font-family: 'Montserrat', sans-serif;
-            text-align: center;
             overflow: hidden;
+            position: relative; /* Permite ancorar o conteúdo no fundo */
         }
         
+        /* O degradê agora começa bem mais para baixo (60%) e foca só no rodapé */
         .pelicula-escura {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.95) 100%);
             position: absolute;
             top: 0;
             left: 0;
@@ -37,22 +33,25 @@
             z-index: 1;
         }
         
+        /* Bloco colado absolutamente no limite inferior da tela */
         .conteudo {
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 2;
-            padding: 30px 20px 40px 20px; 
+            padding: 10px 20px 30px 20px; /* Reduzido para ocupar menos altura */
             color: white;
-            width: 100%;
-            box-sizing: border-box;
+            text-align: center;
         }
 
         /* --- ANIMAÇÕES --- */
         @keyframes deslizarTitulo {
-            0% { opacity: 0; transform: translateY(-20px); }
+            0% { opacity: 0; transform: translateY(-10px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes deslizarSubtitulo {
-            0% { opacity: 0; transform: translateY(20px); }
+            0% { opacity: 0; transform: translateY(10px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes pulsarDourado {
@@ -61,22 +60,24 @@
         }
 
         h1 {
-            font-weight: 900; /* Deixa o título bem grosso e impactante */
-            font-size: 2.5rem;
-            margin-bottom: 5px;
+            font-weight: 900;
+            font-size: 2rem; /* Levemente menor */
+            margin-bottom: 0;
             margin-top: 0;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            /* Sombra mais forte para garantir leitura na parte que não tem degradê */
+            text-shadow: 2px 2px 6px rgba(0,0,0,1); 
             animation: deslizarTitulo 1.5s ease-out forwards;
-            letter-spacing: -1px; /* Junta um pouco as letras, estilo Spotify */
+            letter-spacing: -1px;
         }
         
         p {
-            font-weight: 400; /* Texto mais fino e elegante */
-            font-size: 1.1rem;
-            margin-bottom: 25px;
+            font-weight: 400;
+            font-size: 1rem; /* Mais delicado e compacto */
+            margin-top: 5px;
+            margin-bottom: 15px; 
             color: #e0e0e0;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 1px 1px 4px rgba(0,0,0,1);
             opacity: 0;
             animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
         }
@@ -84,18 +85,18 @@
         .destaque-pai {
             font-weight: 900;
             color: #FFD700;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             animation: pulsarDourado 2.5s infinite;
             display: block; 
-            margin-top: 5px;
-            letter-spacing: 1px; /* Afasta um pouco as letras para dar destaque */
+            margin-top: 2px;
+            letter-spacing: 1px;
         }
 
         .botao-nostalgia {
             background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 15px 32px;
-            font-size: 1rem;
+            padding: 12px 25px; /* Botão um pouco mais fino */
+            font-size: 0.95rem;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             border: none;
@@ -107,6 +108,7 @@
             opacity: 0;
             animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
             letter-spacing: 1px;
+            margin-bottom: 10px;
         }
         
         .botao-nostalgia:active {
@@ -119,6 +121,7 @@
             width: 100%;
             max-width: 320px; 
             margin: 0 auto;
+            margin-bottom: 10px; /* Alinhado ao rodapé */
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -148,7 +151,8 @@
             botao.style.display = "none";
             
             container.style.display = "block";
-            container.innerHTML = '<iframe width="100%" height="130" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+            // Altura do player reduzida para 100 para ocupar menos espaço vertical
+            container.innerHTML = '<iframe width="100%" height="100" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         }
     </script>
 </body>
