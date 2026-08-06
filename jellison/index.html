@@ -6,8 +6,7 @@
     <title>Feliz Dia dos Pais!</title>
     <style>
         body {
-            /* Aqui a mágica acontece: a foto do pai vira o fundo da tela */
-            background-image: url('foto2.jpg');
+            background-image: url('foto.jpg');
             background-size: cover;
             background-position: center;
             background-color: #121212;
@@ -21,7 +20,6 @@
             text-align: center;
         }
         .pelicula-escura {
-            /* Isso cria uma sombra sobre a foto para o texto dar leitura */
             background: rgba(0, 0, 0, 0.6);
             position: absolute;
             top: 0;
@@ -32,9 +30,10 @@
         }
         .conteudo {
             position: relative;
-            z-index: 2; /* Mantém o texto e o botão acima da película escura */
+            z-index: 2;
             padding: 20px;
             color: white;
+            width: 100%;
         }
         h1 {
             font-size: 2.5rem;
@@ -49,7 +48,7 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .botao-nostalgia {
-            background-color: #1DB954;
+            background-color: #1DB954; /* Pode mudar para vermelho do YouTube (#FF0000) se preferir */
             color: #121212;
             padding: 15px 35px;
             font-size: 1.2rem;
@@ -60,6 +59,15 @@
             text-decoration: none;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+            transition: transform 0.1s;
+        }
+        .botao-nostalgia:active {
+            transform: scale(0.95);
+        }
+        /* Oculta o player se quisermos só o áudio, ou deixa pequeno */
+        .player-youtube iframe {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -68,10 +76,23 @@
     
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
-        <p>Você é o melhor pai do mundo.</p>
+        <p>A melhor Playlist do mundo para o Maior Pai do mundo!.</p>
         
-        <!-- Substitua abaixo pelo ID da playlist correta desse pai -->
-        <a href="spotify:playlist:37i9dQZF1DZ06evO49hLQA" class="botao-nostalgia">▶ Iniciar Playlist</a>
+        <!-- Esta div guarda o botão e vai ser trocada pelo player -->
+        <div id="area-do-player">
+            <button class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
+        </div>
     </div>
+
+    <script>
+        function tocarMusica() {
+            var area = document.getElementById('area-do-player');
+            // Quando ele clica, substituímos o botão pelo vídeo rodando sozinho (autoplay=1)
+            // Lembre-se de trocar o código PL... abaixo pelo ID real da sua playlist
+            var playlistID = "FLB0JSO6d5ysH2Mmqz5I9rIw"; 
+            
+            area.innerHTML = '<div class="player-youtube"><iframe width="300" height="80" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
+        }
+    </script>
 </body>
 </html>
