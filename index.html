@@ -3,25 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Fita K7</title>
+    <title>Feliz Dia dos Pais!</title>
     <style>
         body {
+            /* Aqui a mágica acontece: a foto do pai vira o fundo da tela */
+            background-image: url('foto.jpg');
+            background-size: cover;
+            background-position: center;
             background-color: #121212;
-            color: #ffffff;
+            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace; /* Traz um visual mais retrô */
+            font-family: Arial, sans-serif;
             text-align: center;
         }
+        .pelicula-escura {
+            /* Isso cria uma sombra sobre a foto para o texto dar leitura */
+            background: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .conteudo {
+            position: relative;
+            z-index: 2; /* Mantém o texto e o botão acima da película escura */
+            padding: 20px;
+            color: white;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
         .botao-nostalgia {
-            background-color: #1DB954; /* Verde clássico do Spotify */
+            background-color: #1DB954;
             color: #121212;
             padding: 15px 35px;
-            margin-top: 20px;
             font-size: 1.2rem;
             font-weight: bold;
             border: none;
@@ -30,27 +60,18 @@
             text-decoration: none;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
-            transition: transform 0.1s;
-        }
-        .botao-nostalgia:active {
-            transform: scale(0.95);
-        }
-        .icone {
-            font-size: 5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #b3b3b3;
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="icone">📼</div>
-    <h2>Awesome Mix Vol. 1</h2>
-    <p>Prepare-se para viajar no tempo.</p>
+    <div class="pelicula-escura"></div>
     
-    <!-- A mágica acontece aqui: O link "spotify:playlist:..." força a abertura do app -->
-    <a href="spotify:playlist:37i9dQZF1DZ06evO49hLQA" class="botao-nostalgia">Dê o play na nostalgia</a>
+    <div class="conteudo">
+        <h1>Feliz Dia dos Pais!</h1>
+        <p>Um pouco de música boa para o melhor pai do mundo.</p>
+        
+        <!-- Substitua abaixo pelo ID da playlist correta desse pai -->
+        <a href="spotify:playlist:37i9dQZF1DZ06evO49hLQA" class="botao-nostalgia">▶ Iniciar Playlist</a>
+    </div>
 </body>
 </html>
