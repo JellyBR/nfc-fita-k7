@@ -18,6 +18,7 @@
             justify-content: center;
             font-family: Arial, sans-serif;
             text-align: center;
+            overflow: hidden; /* Evita que a tela crie barra de rolagem */
         }
         .pelicula-escura {
             background: rgba(0, 0, 0, 0.6);
@@ -48,8 +49,8 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .botao-nostalgia {
-            background-color: #1DB954; /* Pode mudar para vermelho do YouTube (#FF0000) se preferir */
-            color: #121212;
+            background-color: #FF0000; /* Alterado para o vermelho do YouTube */
+            color: #ffffff;
             padding: 15px 35px;
             font-size: 1.2rem;
             font-weight: bold;
@@ -58,16 +59,22 @@
             cursor: pointer;
             text-decoration: none;
             text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
-            transition: transform 0.1s;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            transition: transform 0.1s, opacity 0.3s;
         }
         .botao-nostalgia:active {
             transform: scale(0.95);
         }
-        /* Oculta o player se quisermos só o áudio, ou deixa pequeno */
-        .player-youtube iframe {
-            border-radius: 15px;
+        
+        /* Esta é a caixa que vai segurar o mini-player no canto */
+        #mini-player-container {
+            position: fixed;
+            bottom: 20px; /* Distância do fundo da tela */
+            right: 20px;  /* Distância do lado direito da tela */
+            z-index: 10;  /* Fica acima de tudo */
             box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            border-radius: 10px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -76,22 +83,30 @@
     
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
-        <p>A melhor Playlist do mundo para o Maior Pai do mundo!.</p>
+        <p>A melhor playlist do mundo para o MAIOR PAI do mundo!</p>
         
-        <!-- Esta div guarda o botão e vai ser trocada pelo player -->
-        <div id="area-do-player">
-            <button class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
-        </div>
+        <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
     </div>
+
+    <!-- Container vazio que vai receber o player quando o botão for clicado -->
+    <div id="mini-player-container"></div>
 
     <script>
         function tocarMusica() {
-            var area = document.getElementById('area-do-player');
-            // Quando ele clica, substituímos o botão pelo vídeo rodando sozinho (autoplay=1)
-            // Lembre-se de trocar o código PL... abaixo pelo ID real da sua playlist
-            var playlistID = "FLB0JSO6d5ysH2Mmqz5I9rIw"; 
+            var container = document.getElementById('mini-player-container');
+            var botao = document.getElementById('btn-play');
             
-            area.innerHTML = '<div class="player-youtube"><iframe width="300" height="80" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
+            // O ID da playlist que você enviou já está configurado aqui
+            var playlistID = "PLpZaq7kciiNIscD5bMLUIyesR_EHTSvxu"; 
+            
+            // Injeta o player com um tamanho bom o suficiente para clicar em "Pular Anúncio"
+            container.innerHTML = '<iframe width="250" height="140" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+            
+            // Muda o visual do botão principal
+            botao.innerText = "Tocando Agora...";
+            botao.onclick = null; // Evita que o usuário clique de novo e carregue o player duplicado
+            botao.style.opacity = "0.7";
+            botao.style.cursor = "default";
         }
     </script>
 </body>
