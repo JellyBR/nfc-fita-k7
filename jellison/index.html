@@ -13,38 +13,39 @@
         body {
             background-image: url('foto.jpg');
             background-size: cover;
-            background-position: center top; 
+            /* Centralizado para manter o foco na foto */
+            background-position: center; 
             background-color: #121212;
             margin: 0;
             
-            /* O segredo para não cortar em celulares: Dynamic Viewport Height */
-            height: 100vh; /* Fallback para celulares antigos */
-            height: 100dvh; /* Medida dinâmica moderna */
+            height: 100vh; 
+            height: 100dvh; 
             
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Empurra de forma natural para o rodapé */
+            /* Mudamos de flex-end para flex-start para colar tudo no topo */
+            justify-content: flex-start; 
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
         }
         
         .pelicula-escura {
-            /* Degradê começando de 50% para proteger os rostos em cima */
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.95) 100%);
+            /* Degradê invertido: escuro de 0% até o meio (50%), deixando o rodapé livre */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 50%);
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             z-index: 1;
-            pointer-events: none; /* Garante que a película não bloqueie os cliques */
+            pointer-events: none; 
         }
         
         .conteudo {
             position: relative;
             z-index: 2;
-            /* 45px na parte de baixo cria uma margem de segurança contra a borda do celular */
-            padding: 10px 20px 45px 20px; 
+            /* 40px no topo cria uma margem de segurança contra a barra do relógio/bateria do celular */
+            padding: 40px 20px 20px 20px; 
             color: white;
             text-align: center;
             width: 100%;
