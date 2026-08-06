@@ -8,20 +8,23 @@
         body {
             background-image: url('foto.jpg');
             background-size: cover;
-            background-position: center;
+            /* Foca a imagem na parte superior para garantir que os rostos apareçam */
+            background-position: center top; 
             background-color: #121212;
             margin: 0;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            /* Empurra todo o conteúdo para a parte de baixo da tela */
+            justify-content: flex-end; 
             font-family: Arial, sans-serif;
             text-align: center;
             overflow: hidden;
         }
+        
+        /* O segredo do visual premium: degradê em vez de película escura total */
         .pelicula-escura {
-            background: rgba(0, 0, 0, 0.6);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%);
             position: absolute;
             top: 0;
             left: 0;
@@ -29,87 +32,90 @@
             bottom: 0;
             z-index: 1;
         }
+        
         .conteudo {
             position: relative;
             z-index: 2;
-            padding: 20px;
+            /* Adiciona um respiro na parte de baixo para não colar na borda do celular */
+            padding: 30px 20px 40px 20px; 
             color: white;
             width: 100%;
+            box-sizing: border-box;
         }
 
         /* --- ANIMAÇÕES --- */
         @keyframes deslizarTitulo {
-            0% { opacity: 0; transform: translateY(-30px); }
+            0% { opacity: 0; transform: translateY(-20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes deslizarSubtitulo {
-            0% { opacity: 0; transform: translateY(30px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes pulsarDourado {
             0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
-        /* ----------------- */
 
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             margin-bottom: 5px;
+            margin-top: 0;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            /* Aplica a animação de descer */
             animation: deslizarTitulo 1.5s ease-out forwards;
         }
+        
         p {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
             color: #e0e0e0;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            opacity: 0; /* Começa invisível */
-            /* Aplica a animação de subir com um atraso de 0.8 segundos */
+            opacity: 0;
             animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
-            padding: 0 15px;
         }
         
         .destaque-pai {
-            color: #FFD700; /* Cor dourada */
+            color: #FFD700;
             font-weight: bold;
-            font-size: 1.5rem;
-            /* Aplica o brilho pulsante infinito */
+            font-size: 1.4rem;
             animation: pulsarDourado 2.5s infinite;
+            display: block; /* Faz o "MAIOR PAI" ficar sozinho na linha de forma natural */
+            margin-top: 5px;
         }
 
         .botao-nostalgia {
-            background-color: #FF0000;
+            /* Degradê no botão deixa com cara de aplicativo profissional */
+            background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 15px 35px;
-            font-size: 1.2rem;
+            padding: 14px 30px;
+            font-size: 1.1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            text-decoration: none;
             text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-            transition: transform 0.1s, opacity 0.3s;
-            opacity: 0; /* Começa invisível */
-            /* O botão só aparece depois do título e do subtítulo */
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            opacity: 0;
             animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
         }
+        
         .botao-nostalgia:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
         }
         
+        /* Ajuste do player para aparecer exatamente no lugar do botão */
         #mini-player-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            border-radius: 10px;
+            display: none; /* Escondido até o clique */
+            width: 100%;
+            max-width: 320px; /* Não deixa ficar largo demais */
+            margin: 0 auto;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            animation: deslizarSubtitulo 0.5s ease-out forwards;
         }
     </style>
 </head>
@@ -118,27 +124,29 @@
     
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
-        <p>A melhor playlist do mundo para o <span class="destaque-pai"><br>MAIOR PAI</span><br> do mundo!</p>
+        <p>A melhor playlist do mundo para o <span class="destaque-pai">MAIOR PAI</span> do mundo!</p>
         
+        <!-- Botão Principal -->
         <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
+        
+        <!-- O player vai nascer aqui, substituindo o botão -->
+        <div id="mini-player-container"></div>
     </div>
-
-    <div id="mini-player-container"></div>
 
     <script>
         function tocarMusica() {
             var container = document.getElementById('mini-player-container');
             var botao = document.getElementById('btn-play');
             
-            // Lembre-se de trocar este ID pela playlist do seu cliente
+            // O ID da playlist que você já tinha configurado
             var playlistID = "PLpZaq7kciiNIscD5bMLUIyesR_EHTSvxu"; 
             
-            container.innerHTML = '<iframe width="250" height="140" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+            // Faz o botão desaparecer
+            botao.style.display = "none";
             
-            botao.innerText = "Tocando Agora...";
-            botao.onclick = null; 
-            botao.style.opacity = "0.7";
-            botao.style.cursor = "default";
+            // Faz a caixa do player aparecer e injeta o vídeo do YouTube
+            container.style.display = "block";
+            container.innerHTML = '<iframe width="100%" height="130" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         }
     </script>
 </body>
