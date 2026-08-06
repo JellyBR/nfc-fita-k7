@@ -18,7 +18,7 @@
             justify-content: center;
             font-family: Arial, sans-serif;
             text-align: center;
-            overflow: hidden; /* Evita que a tela crie barra de rolagem */
+            overflow: hidden;
         }
         .pelicula-escura {
             background: rgba(0, 0, 0, 0.6);
@@ -36,20 +36,53 @@
             color: white;
             width: 100%;
         }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes deslizarTitulo {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes deslizarSubtitulo {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulsarDourado {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+        /* ----------------- */
+
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 5px;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            /* Aplica a animação de descer */
+            animation: deslizarTitulo 1.5s ease-out forwards;
         }
         p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 40px;
             color: #e0e0e0;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            opacity: 0; /* Começa invisível */
+            /* Aplica a animação de subir com um atraso de 0.8 segundos */
+            animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
+            padding: 0 15px;
         }
+        
+        .destaque-pai {
+            color: #FFD700; /* Cor dourada */
+            font-weight: bold;
+            font-size: 1.5rem;
+            /* Aplica o brilho pulsante infinito */
+            animation: pulsarDourado 2.5s infinite;
+        }
+
         .botao-nostalgia {
-            background-color: #FF0000; /* Alterado para o vermelho do YouTube */
+            background-color: #FF0000;
             color: #ffffff;
             padding: 15px 35px;
             font-size: 1.2rem;
@@ -61,17 +94,19 @@
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
             transition: transform 0.1s, opacity 0.3s;
+            opacity: 0; /* Começa invisível */
+            /* O botão só aparece depois do título e do subtítulo */
+            animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
         }
         .botao-nostalgia:active {
             transform: scale(0.95);
         }
         
-        /* Esta é a caixa que vai segurar o mini-player no canto */
         #mini-player-container {
             position: fixed;
-            bottom: 20px; /* Distância do fundo da tela */
-            right: 20px;  /* Distância do lado direito da tela */
-            z-index: 10;  /* Fica acima de tudo */
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
             box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             border-radius: 10px;
             overflow: hidden;
@@ -83,12 +118,11 @@
     
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
-        <p>A melhor playlist do mundo para o MAIOR PAI do mundo!</p>
+        <p>A melhor playlist do mundo para o <span class="destaque-pai"><br>MAIOR PAI</span><br> do mundo!</p>
         
         <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
     </div>
 
-    <!-- Container vazio que vai receber o player quando o botão for clicado -->
     <div id="mini-player-container"></div>
 
     <script>
@@ -96,15 +130,13 @@
             var container = document.getElementById('mini-player-container');
             var botao = document.getElementById('btn-play');
             
-            // O ID da playlist que você enviou já está configurado aqui
+            // Lembre-se de trocar este ID pela playlist do seu cliente
             var playlistID = "PLpZaq7kciiNIscD5bMLUIyesR_EHTSvxu"; 
             
-            // Injeta o player com um tamanho bom o suficiente para clicar em "Pular Anúncio"
             container.innerHTML = '<iframe width="250" height="140" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
             
-            // Muda o visual do botão principal
             botao.innerText = "Tocando Agora...";
-            botao.onclick = null; // Evita que o usuário clique de novo e carregue o player duplicado
+            botao.onclick = null; 
             botao.style.opacity = "0.7";
             botao.style.cursor = "default";
         }
