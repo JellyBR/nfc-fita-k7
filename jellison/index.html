@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Dia dos Pais!</title>
+    
+    <!-- Importação da fonte moderna do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
         body {
             background-image: url('foto.jpg');
             background-size: cover;
-            /* Foca a imagem na parte superior para garantir que os rostos apareçam */
             background-position: center top; 
             background-color: #121212;
             margin: 0;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            /* Empurra todo o conteúdo para a parte de baixo da tela */
             justify-content: flex-end; 
-            font-family: Arial, sans-serif;
+            /* Aqui avisamos o site para usar a nova fonte */
+            font-family: 'Montserrat', sans-serif;
             text-align: center;
             overflow: hidden;
         }
         
-        /* O segredo do visual premium: degradê em vez de película escura total */
         .pelicula-escura {
             background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%);
             position: absolute;
@@ -36,7 +40,6 @@
         .conteudo {
             position: relative;
             z-index: 2;
-            /* Adiciona um respiro na parte de baixo para não colar na borda do celular */
             padding: 30px 20px 40px 20px; 
             color: white;
             width: 100%;
@@ -58,15 +61,18 @@
         }
 
         h1 {
-            font-size: 2.4rem;
+            font-weight: 900; /* Deixa o título bem grosso e impactante */
+            font-size: 2.5rem;
             margin-bottom: 5px;
             margin-top: 0;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             animation: deslizarTitulo 1.5s ease-out forwards;
+            letter-spacing: -1px; /* Junta um pouco as letras, estilo Spotify */
         }
         
         p {
+            font-weight: 400; /* Texto mais fino e elegante */
             font-size: 1.1rem;
             margin-bottom: 25px;
             color: #e0e0e0;
@@ -76,21 +82,22 @@
         }
         
         .destaque-pai {
+            font-weight: 900;
             color: #FFD700;
-            font-weight: bold;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             animation: pulsarDourado 2.5s infinite;
-            display: block; /* Faz o "MAIOR PAI" ficar sozinho na linha de forma natural */
+            display: block; 
             margin-top: 5px;
+            letter-spacing: 1px; /* Afasta um pouco as letras para dar destaque */
         }
 
         .botao-nostalgia {
-            /* Degradê no botão deixa com cara de aplicativo profissional */
             background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 14px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            padding: 15px 32px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -99,6 +106,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
             opacity: 0;
             animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
+            letter-spacing: 1px;
         }
         
         .botao-nostalgia:active {
@@ -106,11 +114,10 @@
             box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
         }
         
-        /* Ajuste do player para aparecer exatamente no lugar do botão */
         #mini-player-container {
-            display: none; /* Escondido até o clique */
+            display: none; 
             width: 100%;
-            max-width: 320px; /* Não deixa ficar largo demais */
+            max-width: 320px; 
             margin: 0 auto;
             border-radius: 12px;
             overflow: hidden;
@@ -126,10 +133,8 @@
         <h1>Feliz Dia dos Pais!</h1>
         <p>A melhor playlist do mundo para o <span class="destaque-pai">MAIOR PAI</span> do mundo!</p>
         
-        <!-- Botão Principal -->
         <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
         
-        <!-- O player vai nascer aqui, substituindo o botão -->
         <div id="mini-player-container"></div>
     </div>
 
@@ -138,13 +143,10 @@
             var container = document.getElementById('mini-player-container');
             var botao = document.getElementById('btn-play');
             
-            // O ID da playlist que você já tinha configurado
             var playlistID = "PLpZaq7kciiNIscD5bMLUIyesR_EHTSvxu"; 
             
-            // Faz o botão desaparecer
             botao.style.display = "none";
             
-            // Faz a caixa do player aparecer e injeta o vídeo do YouTube
             container.style.display = "block";
             container.innerHTML = '<iframe width="100%" height="130" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         }
