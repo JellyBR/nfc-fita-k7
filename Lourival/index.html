@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia dos Pais!</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-image: url('foto.jpg');
+            background-size: cover;
+            background-position: center; 
+            background-color: #121212;
+            margin: 0;
+            
+            height: 100vh; 
+            height: 100dvh; 
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+        
+        .pelicula-escura {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 50%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            pointer-events: none; 
+        }
+        
+        .conteudo {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px 20px 20px; 
+            color: white;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes deslizarTitulo {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes deslizarSubtitulo {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulsarDourado {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2rem;
+            margin-bottom: 0;
+            margin-top: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0,0,0,1); 
+            animation: deslizarTitulo 1.5s ease-out forwards;
+            letter-spacing: -1px;
+        }
+        
+        p {
+            font-weight: 400;
+            font-size: 1rem;
+            margin-top: 5px;
+            margin-bottom: 15px; 
+            color: #e0e0e0;
+            text-shadow: 1px 1px 4px rgba(0,0,0,1);
+            opacity: 0;
+            animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
+        }
+        
+        .destaque-pai {
+            font-weight: 900;
+            color: #FFD700;
+            font-size: 1.2rem;
+            animation: pulsarDourado 2.5s infinite;
+            display: block; 
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+
+        .botao-nostalgia {
+            background: linear-gradient(135deg, #ff0000, #cc0000); 
+            color: #ffffff;
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            opacity: 0;
+            animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .botao-nostalgia:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="pelicula-escura"></div>
+    
+    <div class="conteudo">
+        <h1>Feliz Dia dos Pais!</h1>
+        <p>A música perfeita para o <span class="destaque-pai">MAIOR PAI</span> do mundo!</p>
+        
+        <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
+        
+        <!-- Reprodutor de áudio invisível apontando para o arquivo mp3 -->
+        <audio id="meu-audio" src="musica.mp3"></audio>
+    </div>
+
+    <script>
+        function tocarMusica() {
+            var audio = document.getElementById('meu-audio');
+            var botao = document.getElementById('btn-play');
+            
+            // Inicia a música
+            audio.play();
+            
+            // Muda o visual e o texto do botão para indicar que está tocando
+            botao.innerText = "Tocando Agora...";
+            botao.style.opacity = "0.7";
+            botao.style.cursor = "default";
+            
+            // Remove a função de clique para não reiniciar a música se ele clicar de novo
+            botao.onclick = null; 
+        }
+    </script>
+</body>
+</html>
