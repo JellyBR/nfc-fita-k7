@@ -20,13 +20,14 @@
             overflow: hidden;
         }
         
+        /* Container da foto agora ocupa 80% da tela */
         .foto-container {
             width: 100%;
-            height: 70dvh; 
+            height: 80dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px; 
+            padding: 10px; /* Margem reduzida para maximizar ainda mais a imagem */
             box-sizing: border-box;
             animation: deslizarTitulo 1s ease-out forwards;
         }
@@ -39,18 +40,20 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
         
+        /* Container do conteúdo compactado nos 20% restantes */
         .conteudo {
             flex: 1; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 15px 20px 15px; 
+            padding: 0 10px 10px 10px; /* Margens mínimas para caber tudo */
             color: white;
             text-align: center;
             box-sizing: border-box;
         }
 
+        /* --- ANIMAÇÕES --- */
         @keyframes deslizarTitulo {
             0% { opacity: 0; transform: translateY(-10px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -64,9 +67,10 @@
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
 
+        /* Fontes e margens bastante reduzidas para evitar cortes na tela */
         h1 {
             font-weight: 900;
-            font-size: 1.7rem; 
+            font-size: 1.4rem; 
             margin-bottom: 0;
             margin-top: 0;
             color: #ffffff;
@@ -76,9 +80,9 @@
         
         p {
             font-weight: 400;
-            font-size: 0.9rem; 
-            margin-top: 5px;
-            margin-bottom: 10px; 
+            font-size: 0.85rem; 
+            margin-top: 2px;
+            margin-bottom: 8px; 
             color: #e0e0e0;
             opacity: 0;
             animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
@@ -87,18 +91,18 @@
         .destaque-pai {
             font-weight: 900;
             color: #FFD700;
-            font-size: 1.1rem; 
+            font-size: 1rem; 
             animation: pulsarDourado 2.5s infinite;
             display: block; 
-            margin-top: 2px;
+            margin-top: 0px;
             letter-spacing: 1px;
         }
 
         .botao-nostalgia {
             background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 12px 24px; 
-            font-size: 0.85rem; 
+            padding: 10px 20px; 
+            font-size: 0.8rem; 
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             border: none;
@@ -127,11 +131,11 @@
     
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
+        <!-- Frase atualizada para MELHOR PAI -->
         <p>A música perfeita para o <span class="destaque-pai">MELHOR PAI</span> do mundo!</p>
         
         <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
         
-        <!-- O atributo 'loop' foi adicionado aqui para repetir a música infinitamente -->
         <audio id="meu-audio" src="musica.mp3" loop></audio>
     </div>
 
