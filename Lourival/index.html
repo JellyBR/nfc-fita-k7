@@ -11,7 +11,6 @@
     
     <style>
         body {
-            /* Fundo escuro premium para a tela toda */
             background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
             margin: 0;
             height: 100dvh; 
@@ -21,14 +20,14 @@
             overflow: hidden;
         }
         
-        /* Container exclusivo para a foto */
+        /* Container da foto agora com 70% da tela */
         .foto-container {
             width: 100%;
-            height: 55dvh; /* Ocupa 55% da altura da tela */
+            height: 70dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px; /* Margem ligeiramente menor para maximizar a foto */
             box-sizing: border-box;
             animation: deslizarTitulo 1s ease-out forwards;
         }
@@ -36,20 +35,19 @@
         .foto-destaque {
             max-width: 100%;
             max-height: 100%;
-            /* A mágica acontece aqui: contain garante que a foto caiba inteira sem cortar */
             object-fit: contain; 
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
         
-        /* Container exclusivo para textos e botão */
+        /* Container do conteúdo ocupando os 30% restantes */
         .conteudo {
-            flex: 1; /* Preenche todo o restante da tela para baixo */
+            flex: 1; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 20px 30px 20px; 
+            padding: 0 15px 20px 15px; /* Margens reduzidas para otimizar espaço */
             color: white;
             text-align: center;
             box-sizing: border-box;
@@ -69,9 +67,10 @@
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
 
+        /* Fontes reajustadas para caber no novo layout */
         h1 {
             font-weight: 900;
-            font-size: 2rem;
+            font-size: 1.7rem; /* Reduzido de 2rem */
             margin-bottom: 0;
             margin-top: 0;
             color: #ffffff;
@@ -81,9 +80,9 @@
         
         p {
             font-weight: 400;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Reduzido de 1rem */
             margin-top: 5px;
-            margin-bottom: 15px; 
+            margin-bottom: 10px; /* Margem mais curta */
             color: #e0e0e0;
             opacity: 0;
             animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
@@ -92,7 +91,7 @@
         .destaque-pai {
             font-weight: 900;
             color: #FFD700;
-            font-size: 1.2rem;
+            font-size: 1.1rem; /* Reduzido de 1.2rem */
             animation: pulsarDourado 2.5s infinite;
             display: block; 
             margin-top: 2px;
@@ -102,8 +101,8 @@
         .botao-nostalgia {
             background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 14px 28px;
-            font-size: 0.95rem;
+            padding: 12px 24px; /* Botão ligeiramente menor */
+            font-size: 0.85rem; /* Fonte do botão reduzida */
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             border: none;
@@ -115,7 +114,7 @@
             opacity: 0;
             animation: deslizarSubtitulo 1s ease-out 1.5s forwards;
             letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 0;
         }
         
         .botao-nostalgia:active {
@@ -126,12 +125,10 @@
 </head>
 <body>
     
-    <!-- A foto agora fica separada do texto -->
     <div class="foto-container">
         <img src="foto.jpg" class="foto-destaque" alt="Foto do Dia dos Pais">
     </div>
     
-    <!-- A área de conteúdo fica logo abaixo, sem encostar na imagem -->
     <div class="conteudo">
         <h1>Feliz Dia dos Pais!</h1>
         <p>A música perfeita para o <span class="destaque-pai">MAIOR PAI</span> do mundo!</p>
