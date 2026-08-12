@@ -20,7 +20,7 @@
             overflow: hidden;
         }
         
-        /* Container da foto mantido rigorosamente em 80% da tela */
+        /* Container da foto mantido em 80% da tela */
         .foto-container {
             width: 100%;
             height: 80dvh; 
@@ -67,9 +67,10 @@
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
 
+        /* Fontes levemente aumentadas já que o texto agora é mais curto */
         h1 {
             font-weight: 900;
-            font-size: 1.3rem; /* Ligeiramente menor para dar espaço ao texto */
+            font-size: 1.6rem; 
             margin-bottom: 0;
             margin-top: 0;
             color: #ffffff;
@@ -79,10 +80,10 @@
         
         p {
             font-weight: 400;
-            font-size: 0.75rem; /* Fonte reduzida para o texto mais longo caber nos 20% */
-            line-height: 1.3; /* Espaçamento entre linhas ajustado */
+            font-size: 0.9rem; 
+            line-height: 1.4; 
             margin-top: 4px;
-            margin-bottom: 8px; 
+            margin-bottom: 12px; 
             color: #e0e0e0;
             opacity: 0;
             animation: deslizarSubtitulo 1.2s ease-out 0.8s forwards;
@@ -92,10 +93,10 @@
         .destaque-pai {
             font-weight: 900;
             color: #FFD700;
-            font-size: 1rem; 
+            font-size: 1.1rem; 
             animation: pulsarDourado 2.5s infinite;
-            display: block; /* Faz a palavra pular para uma linha isolada */
-            margin-top: 2px;
+            display: block; 
+            margin-top: 5px;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -103,8 +104,8 @@
         .botao-nostalgia {
             background: linear-gradient(135deg, #ff0000, #cc0000); 
             color: #ffffff;
-            padding: 8px 18px; /* Botão ligeiramente mais fino para poupar espaço */
-            font-size: 0.75rem; 
+            padding: 10px 22px; 
+            font-size: 0.8rem; 
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             border: none;
@@ -128,14 +129,14 @@
 <body>
     
     <div class="foto-container">
-        <img src="foto.jpg" class="foto-destaque" alt="Foto do Jeferson">
+        <img src="foto.jpg" class="foto-destaque" alt="Foto do Bidu e Jefão">
     </div>
     
     <div class="conteudo">
-        <h1>Bidu,</h1>
-        <p>a vida me deu um grande amigo disfarçado de irmão mais velho e agora vejo você ser o herói da sua própria família.<span class="destaque-pai">Feliz Dia dos Pais!</span></p>
+        <h1>Bidu</h1>
+        <p>Tamo junto até o fim!<br><span class="destaque-pai">Jefão</span></p>
         
-        <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na emoção!</button>
+        <button id="btn-play" class="botao-nostalgia" onclick="tocarMusica()">▶ Dê o play na nostalgia</button>
         
         <audio id="meu-audio" src="musica.mp3" loop></audio>
     </div>
