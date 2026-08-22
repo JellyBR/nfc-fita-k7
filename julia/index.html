@@ -20,14 +20,14 @@
             overflow: hidden;
         }
         
-        /* Container da foto aumentado para 60% para deixar a imagem maior */
+        /* Container da foto retornado para 50% */
         .foto-container {
             width: 100%;
-            height: 60dvh; 
+            height: 50dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px 10px 5px 10px; 
+            padding: 15px 15px 5px 15px; 
             box-sizing: border-box;
             animation: deslizarTitulo 1s ease-out forwards;
         }
@@ -47,7 +47,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 15px 10px 15px; 
+            padding: 0 15px 15px 15px; 
             color: white;
             text-align: center;
             box-sizing: border-box;
@@ -66,7 +66,7 @@
             0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
-        /* Nova animação de brilho para o título principal */
+        /* Efeito de brilho adicionado ao Título */
         @keyframes pulsarTitulo {
             0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
             50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.5); }
@@ -78,7 +78,6 @@
             margin-bottom: 8px;
             margin-top: 0;
             color: #ffffff;
-            /* Combina o deslizar com o pulsar constante */
             animation: deslizarTitulo 1.5s ease-out forwards, pulsarTitulo 3s infinite 1.5s;
             letter-spacing: -0.5px;
         }
@@ -102,7 +101,7 @@
             margin-bottom: 15px;
         }
         
-        /* Estilo para deixar Julia e Feliz Aniversário maiores e em negrito */
+        /* Classe para as palavras em negrito e maiores */
         .texto-maior {
             font-size: 1.05rem;
             font-weight: 900;
@@ -149,7 +148,6 @@
 <body>
     
     <div class="foto-container">
-        <!-- Atualizei o alt da imagem para refletir o presente -->
         <img src="foto.jpg" class="foto-destaque" alt="Foto da Julia e Dinho">
     </div>
     
@@ -205,3 +203,4 @@
     </script>
 </body>
 </html>
+
