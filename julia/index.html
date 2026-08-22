@@ -20,14 +20,14 @@
             overflow: hidden;
         }
         
-        /* Container da foto reduzido para 50% para acomodar o texto maior */
+        /* Container da foto aumentado para 60% para deixar a imagem maior */
         .foto-container {
             width: 100%;
-            height: 50dvh; 
+            height: 60dvh; 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px 15px 5px 15px; 
+            padding: 10px 10px 5px 10px; 
             box-sizing: border-box;
             animation: deslizarTitulo 1s ease-out forwards;
         }
@@ -47,7 +47,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 15px 15px 15px; 
+            padding: 0 15px 10px 15px; 
             color: white;
             text-align: center;
             box-sizing: border-box;
@@ -66,6 +66,11 @@
             0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
             50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
         }
+        /* Nova animação de brilho para o título principal */
+        @keyframes pulsarTitulo {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+            50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.5); }
+        }
 
         h1 {
             font-weight: 900;
@@ -73,7 +78,8 @@
             margin-bottom: 8px;
             margin-top: 0;
             color: #ffffff;
-            animation: deslizarTitulo 1.5s ease-out forwards;
+            /* Combina o deslizar com o pulsar constante */
+            animation: deslizarTitulo 1.5s ease-out forwards, pulsarTitulo 3s infinite 1.5s;
             letter-spacing: -0.5px;
         }
         
@@ -96,6 +102,13 @@
             margin-bottom: 15px;
         }
         
+        /* Estilo para deixar Julia e Feliz Aniversário maiores e em negrito */
+        .texto-maior {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
         .destaque-pai {
             font-weight: 900;
             color: #FFD700;
@@ -151,12 +164,12 @@
         </p>
         
         <p>
-            <strong>Julia</strong>,<br>
+            <strong class="texto-maior">Julia</strong>,<br>
             Sempre que se sentir acoada, com medo, assustada ou até mesmo sozinha venha aqui e recite a oração de São Miguel, com certeza a paz voltará ao seu coração!
         </p>
 
         <p>
-            Feliz Aniversário!<br>
+            <strong class="texto-maior">Feliz Aniversário!</strong><br>
             <span class="destaque-pai">Dinho te ama "UM TANTÃO ASSIM DO MUNDO"</span>
         </p>
         
