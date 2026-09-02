@@ -1,4 +1,4 @@
-/<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -8,17 +8,47 @@
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
         body {
-            background-color: #222;
+            background-color: #000000; /* Fundo 100% Preto */
             color: #fff;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column; /* Empilha os itens verticalmente */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            gap: 30px; /* Espaçamento entre logo, player e instagram */
+            gap: 30px;
+            position: relative;
+        }
+
+        /* Efeito de Fagulhas no Fundo */
+        .sparks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .spark {
+            position: absolute;
+            bottom: -10px;
+            width: 4px;
+            height: 4px;
+            background-color: #ff9d00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff9d00, 0 0 20px #ff2a00, 0 0 30px #ff2a00;
+            animation: flyUp linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
         }
 
         /* Logo da Empresa */
@@ -88,7 +118,6 @@
             overflow: hidden;
         }
 
-        /* Carretéis da Fita */
         .reel {
             width: 50px;
             height: 50px;
@@ -118,7 +147,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Display Digital */
         .lcd-display {
             background-color: #9ea771;
             color: #000;
@@ -131,7 +159,6 @@
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
         }
 
-        /* Controles do Player */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -177,6 +204,7 @@
             gap: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 10;
         }
 
         .insta-btn:active {
@@ -186,6 +214,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Container das Fagulhas Visuais -->
+    <div class="sparks-container" id="sparks-container"></div>
 
     <img src="https://jellybr.github.io/nfc-fita-k7/adriana/c3d.png" alt="Coisas 3D Logo" class="brand-logo">
 
@@ -218,6 +249,22 @@
     </a>
 
     <script>
+        // Geração das Fagulhas
+        const sparksContainer = document.getElementById('sparks-container');
+        const sparkCount = 35; // Quantidade de fagulhas na tela
+
+        for (let i = 0; i < sparkCount; i++) {
+            let spark = document.createElement('div');
+            spark.classList.add('spark');
+            // Posição horizontal aleatória
+            spark.style.left = Math.random() * 100 + 'vw';
+            // Duração da animação aleatória (velocidade de subida)
+            spark.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            // Atraso aleatório para não subirem todas juntas
+            spark.style.animationDelay = Math.random() * 3 + 's';
+            sparksContainer.appendChild(spark);
+        }
+
         // CONFIGURAÇÃO DAS MÚSICAS
         const totalTracks = 12;
         let playlist = Array.from({length: totalTracks}, (_, i) => `musicas/${i + 1}.mp3`);
@@ -237,11 +284,9 @@
 
         // EVENTO TELA INICIAL
         btnPlayNostalgia.addEventListener('click', () => {
-            // Esconde o botão e mostra o toca-fitas
             startScreen.style.display = 'none';
             playerScreen.style.display = 'flex';
             
-            // Carrega a primeira música e dá o play automaticamente
             loadTrack(currentTrackIndex);
             playMusic();
         });
@@ -249,7 +294,6 @@
         // FUNÇÕES DO PLAYER
         function loadTrack(index) {
             audio.src = playlist[index];
-            // Extrai o número da música do caminho do arquivo
             let trackNum = playlist[index].split('/')[1].split('.')[0]; 
             trackDisplay.innerText = `TRACK ${trackNum.padStart(2, '0')}`;
         }
@@ -298,7 +342,6 @@
             btnShuffle.classList.toggle('active');
         });
 
-        // Passa para a próxima música automaticamente ao terminar
         audio.addEventListener('ended', nextTrack);
     </script>
 </body>
