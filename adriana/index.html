@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+/<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toca-Fitas NFC</title>
+    <title>Toca-Fitas NFC - Adriana | Coisas 3D</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
@@ -12,15 +12,29 @@
             color: #fff;
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column; /* Empilha os itens verticalmente */
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            gap: 30px; /* Espaçamento entre logo, player e instagram */
+        }
+
+        /* Logo da Empresa */
+        .brand-logo {
+            width: 180px;
+            max-width: 80vw;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+            transition: transform 0.3s;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
         }
 
         /* Telas */
-        #nfc-screen, #player-screen {
+        #start-screen, #player-screen {
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -32,9 +46,9 @@
             display: none;
         }
 
-        /* Botões Iniciais */
-        .btn-large {
-            background: linear-gradient(135deg, #ff007f, #7f00ff);
+        /* Botão Inicial */
+        #play-nostalgia {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
             border: 2px solid #fff;
             color: white;
             padding: 15px 30px;
@@ -43,18 +57,12 @@
             border-radius: 8px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
             transition: transform 0.1s;
         }
 
-        .btn-large:active {
+        #play-nostalgia:active {
             transform: scale(0.95);
-        }
-
-        #play-nostalgia {
-            display: none;
-            background: linear-gradient(135deg, #00f2fe, #4facfe);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
         }
 
         /* Toca-Fitas Retro */
@@ -154,21 +162,37 @@
             background: linear-gradient(to bottom, #ff5555, #cc0000);
             color: white;
         }
+
+        /* Botão do Instagram */
+        .insta-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .insta-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
-    <!-- TELA 1: Leitura NFC -->
-    <div id="nfc-screen">
-        <h2>Projeto Fita K7</h2>
-        <p id="nfc-status">Aguardando leitura...</p>
-        <button id="btn-scan" class="btn-large">Ler Fita K7 (NFC)</button>
-        <button id="btn-sim-nfc" class="btn-large" style="background: #555; font-size: 0.9rem; padding: 10px;">Simular Leitura (Teste)</button>
-        
-        <button id="play-nostalgia" class="btn-large">Dê o play na Nostalgia</button>
+    <img src="https://jellybr.github.io/nfc-fita-k7/adriana/c3d.png" alt="Coisas 3D Logo" class="brand-logo">
+
+    <div id="start-screen">
+        <button id="play-nostalgia">Dê o play na Nostalgia</button>
     </div>
 
-    <!-- TELA 2: Toca-Fitas -->
     <div id="player-screen">
         <div class="boombox">
             <div class="lcd-display" id="track-display">TRACK 01</div>
@@ -189,6 +213,10 @@
         </div>
     </div>
 
+    <a href="https://www.instagram.com/coisas3doficial/" target="_blank" class="insta-btn">
+        📷 Siga a Coisas 3D
+    </a>
+
     <script>
         // CONFIGURAÇÃO DAS MÚSICAS
         const totalTracks = 12;
@@ -199,51 +227,23 @@
         const audio = new Audio();
 
         // ELEMENTOS DOM
-        const nfcScreen = document.getElementById('nfc-screen');
+        const startScreen = document.getElementById('start-screen');
         const playerScreen = document.getElementById('player-screen');
-        const btnScan = document.getElementById('btn-scan');
-        const btnSimNfc = document.getElementById('btn-sim-nfc');
         const btnPlayNostalgia = document.getElementById('play-nostalgia');
-        const nfcStatus = document.getElementById('nfc-status');
         
         const trackDisplay = document.getElementById('track-display');
         const reels = document.querySelectorAll('.reel');
         const btnShuffle = document.getElementById('btn-shuffle');
 
-        // FUNÇÕES NFC
-        async function startNFCScan() {
-            try {
-                if ('NDEFReader' in window) {
-                    const ndef = new NDEFReader();
-                    await ndef.scan();
-                    nfcStatus.innerText = "Aproxime a fita K7...";
-                    
-                    ndef.addEventListener("reading", () => {
-                        nfcSuccess();
-                    });
-                } else {
-                    nfcStatus.innerText = "Web NFC não suportado neste navegador. Use o botão Simular.";
-                }
-            } catch (error) {
-                nfcStatus.innerText = "Erro ao iniciar NFC: " + error;
-            }
-        }
-
-        function nfcSuccess() {
-            btnScan.style.display = 'none';
-            btnSimNfc.style.display = 'none';
-            nfcStatus.style.display = 'none';
-            btnPlayNostalgia.style.display = 'block';
-        }
-
-        // EVENTOS TELA INICIAL
-        btnScan.addEventListener('click', startNFCScan);
-        btnSimNfc.addEventListener('click', nfcSuccess);
-        
+        // EVENTO TELA INICIAL
         btnPlayNostalgia.addEventListener('click', () => {
-            nfcScreen.style.display = 'none';
+            // Esconde o botão e mostra o toca-fitas
+            startScreen.style.display = 'none';
             playerScreen.style.display = 'flex';
+            
+            // Carrega a primeira música e dá o play automaticamente
             loadTrack(currentTrackIndex);
+            playMusic();
         });
 
         // FUNÇÕES DO PLAYER
@@ -286,7 +286,7 @@
             playMusic();
         }
 
-        // EVENTOS DO PLAYER
+        // EVENTOS DOS CONTROLES DO PLAYER
         document.getElementById('btn-play').addEventListener('click', playMusic);
         document.getElementById('btn-pause').addEventListener('click', pauseMusic);
         document.getElementById('btn-stop').addEventListener('click', stopMusic);
@@ -298,7 +298,7 @@
             btnShuffle.classList.toggle('active');
         });
 
-        // Passa para a próxima automaticamente ao terminar
+        // Passa para a próxima música automaticamente ao terminar
         audio.addEventListener('ended', nextTrack);
     </script>
 </body>
