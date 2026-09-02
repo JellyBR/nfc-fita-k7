@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toca-Fitas NFC</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Telas */
+        #nfc-screen, #player-screen {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #player-screen {
+            display: none;
+        }
+
+        /* Botões Iniciais */
+        .btn-large {
+            background: linear-gradient(135deg, #ff007f, #7f00ff);
+            border: 2px solid #fff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            transition: transform 0.1s;
+        }
+
+        .btn-large:active {
+            transform: scale(0.95);
+        }
+
+        #play-nostalgia {
+            display: none;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        /* Toca-Fitas Retro */
+        .boombox {
+            background: linear-gradient(to bottom, #d3d3d3, #888);
+            border: 4px solid #555;
+            border-radius: 15px;
+            padding: 20px;
+            width: 320px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 10px 10px 20px rgba(0,0,0,0.8);
+        }
+
+        .tape-deck {
+            background-color: #111;
+            border: 3px solid #333;
+            border-radius: 10px;
+            height: 120px;
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Carretéis da Fita */
+        .reel {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            margin: 0 15px;
+            position: relative;
+            background: radial-gradient(circle, #333 40%, transparent 45%);
+        }
+
+        .reel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            right: -10px;
+            height: 4px;
+            background: #fff;
+            transform: translateY(-50%);
+        }
+
+        .spinning {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Display Digital */
+        .lcd-display {
+            background-color: #9ea771;
+            color: #000;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: inset 3px #7a8258;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Controles do Player */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            background: #222;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #111;
+        }
+
+        .ctrl-btn {
+            background: linear-gradient(to bottom, #ccc, #666);
+            border: 1px solid #333;
+            color: #111;
+            font-size: 1.2rem;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px #444;
+            transition: all 0.1s;
+        }
+
+        .ctrl-btn:active {
+            box-shadow: 0 0 #444;
+            transform: translateY(4px);
+        }
+
+        .ctrl-btn.active {
+            background: linear-gradient(to bottom, #ff5555, #cc0000);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA 1: Leitura NFC -->
+    <div id="nfc-screen">
+        <h2>Projeto Fita K7</h2>
+        <p id="nfc-status">Aguardando leitura...</p>
+        <button id="btn-scan" class="btn-large">Ler Fita K7 (NFC)</button>
+        <button id="btn-sim-nfc" class="btn-large" style="background: #555; font-size: 0.9rem; padding: 10px;">Simular Leitura (Teste)</button>
+        
+        <button id="play-nostalgia" class="btn-large">Dê o play na Nostalgia</button>
+    </div>
+
+    <!-- TELA 2: Toca-Fitas -->
+    <div id="player-screen">
+        <div class="boombox">
+            <div class="lcd-display" id="track-display">TRACK 01</div>
+            
+            <div class="tape-deck">
+                <div class="reel" id="reel-left"></div>
+                <div class="reel" id="reel-right"></div>
+            </div>
+
+            <div class="controls">
+                <button class="ctrl-btn" id="btn-prev">◄◄</button>
+                <button class="ctrl-btn" id="btn-play">►</button>
+                <button class="ctrl-btn" id="btn-pause">❚❚</button>
+                <button class="ctrl-btn" id="btn-stop">■</button>
+                <button class="ctrl-btn" id="btn-next">►►</button>
+                <button class="ctrl-btn" id="btn-shuffle">🔀</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO DAS MÚSICAS
+        const totalTracks = 12;
+        let playlist = Array.from({length: totalTracks}, (_, i) => `musicas/${i + 1}.mp3`);
+        
+        let currentTrackIndex = 0;
+        let isShuffle = false;
+        const audio = new Audio();
+
+        // ELEMENTOS DOM
+        const nfcScreen = document.getElementById('nfc-screen');
+        const playerScreen = document.getElementById('player-screen');
+        const btnScan = document.getElementById('btn-scan');
+        const btnSimNfc = document.getElementById('btn-sim-nfc');
+        const btnPlayNostalgia = document.getElementById('play-nostalgia');
+        const nfcStatus = document.getElementById('nfc-status');
+        
+        const trackDisplay = document.getElementById('track-display');
+        const reels = document.querySelectorAll('.reel');
+        const btnShuffle = document.getElementById('btn-shuffle');
+
+        // FUNÇÕES NFC
+        async function startNFCScan() {
+            try {
+                if ('NDEFReader' in window) {
+                    const ndef = new NDEFReader();
+                    await ndef.scan();
+                    nfcStatus.innerText = "Aproxime a fita K7...";
+                    
+                    ndef.addEventListener("reading", () => {
+                        nfcSuccess();
+                    });
+                } else {
+                    nfcStatus.innerText = "Web NFC não suportado neste navegador. Use o botão Simular.";
+                }
+            } catch (error) {
+                nfcStatus.innerText = "Erro ao iniciar NFC: " + error;
+            }
+        }
+
+        function nfcSuccess() {
+            btnScan.style.display = 'none';
+            btnSimNfc.style.display = 'none';
+            nfcStatus.style.display = 'none';
+            btnPlayNostalgia.style.display = 'block';
+        }
+
+        // EVENTOS TELA INICIAL
+        btnScan.addEventListener('click', startNFCScan);
+        btnSimNfc.addEventListener('click', nfcSuccess);
+        
+        btnPlayNostalgia.addEventListener('click', () => {
+            nfcScreen.style.display = 'none';
+            playerScreen.style.display = 'flex';
+            loadTrack(currentTrackIndex);
+        });
+
+        // FUNÇÕES DO PLAYER
+        function loadTrack(index) {
+            audio.src = playlist[index];
+            // Extrai o número da música do caminho do arquivo
+            let trackNum = playlist[index].split('/')[1].split('.')[0]; 
+            trackDisplay.innerText = `TRACK ${trackNum.padStart(2, '0')}`;
+        }
+
+        function playMusic() {
+            audio.play();
+            reels.forEach(reel => reel.classList.add('spinning'));
+        }
+
+        function pauseMusic() {
+            audio.pause();
+            reels.forEach(reel => reel.classList.remove('spinning'));
+        }
+
+        function stopMusic() {
+            audio.pause();
+            audio.currentTime = 0;
+            reels.forEach(reel => reel.classList.remove('spinning'));
+        }
+
+        function nextTrack() {
+            if (isShuffle) {
+                currentTrackIndex = Math.floor(Math.random() * totalTracks);
+            } else {
+                currentTrackIndex = (currentTrackIndex + 1) % totalTracks;
+            }
+            loadTrack(currentTrackIndex);
+            playMusic();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + totalTracks) % totalTracks;
+            loadTrack(currentTrackIndex);
+            playMusic();
+        }
+
+        // EVENTOS DO PLAYER
+        document.getElementById('btn-play').addEventListener('click', playMusic);
+        document.getElementById('btn-pause').addEventListener('click', pauseMusic);
+        document.getElementById('btn-stop').addEventListener('click', stopMusic);
+        document.getElementById('btn-next').addEventListener('click', nextTrack);
+        document.getElementById('btn-prev').addEventListener('click', prevTrack);
+        
+        btnShuffle.addEventListener('click', () => {
+            isShuffle = !isShuffle;
+            btnShuffle.classList.toggle('active');
+        });
+
+        // Passa para a próxima automaticamente ao terminar
+        audio.addEventListener('ended', nextTrack);
+    </script>
+</body>
+</html>
