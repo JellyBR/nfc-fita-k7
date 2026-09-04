@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Samara ❤️</title>
+    <title>Para Samara</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: linear-gradient(180deg, #111111 0%, #000000 100%);
+            background-color: #050505;
             height: 100vh;
             height: 100dvh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-family: 'Montserrat', sans-serif;
@@ -29,223 +29,308 @@
             color: #ffffff;
         }
 
-        /* --- TELA 1: INTRODUÇÃO / SURPRESA --- */
+        /* TELA INTRODUÇÃO */
         #tela-intro {
-            position: absolute;
+            position: fixed;
             inset: 0;
-            background: radial-gradient(circle, #242424 0%, #0a0a0a 100%);
+            background: radial-gradient(circle at center, #1c1a16 0%, #080808 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 30px;
             text-align: center;
-            z-index: 20;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            z-index: 50;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+        }
+
+        .intro-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         #tela-intro h2 {
-            font-weight: 900;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            letter-spacing: -0.5px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #ffffff 40%, #c4a760 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         #tela-intro p {
-            font-weight: 400;
-            font-size: 1.1rem;
-            color: #e0e0e0;
-            line-height: 1.5;
-            margin-bottom: 35px;
-            max-width: 320px;
-        }
-
-        /* --- TELA 2: PRINCIPAL --- */
-        #tela-principal {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-
-        /* Container da foto com 85% de altura */
-        .foto-container {
-            width: 100%;
-            height: 85dvh;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px;
-        }
-
-        .foto-destaque {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 14px;
-        }
-
-        /* Cartão translúcido sobre a imagem */
-        .card-mensagem {
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            right: 16px;
-            max-height: 52%;
-            background: rgba(10, 10, 10, 0.78);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 14px 16px;
-            overflow-y: auto;
-            text-align: left;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-        }
-
-        .card-mensagem h1 {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: #FFD700;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .card-mensagem p {
-            font-size: 0.82rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #f1f1f1;
-            margin-bottom: 10px;
-        }
-
-        .card-mensagem .destaque-final {
-            font-weight: 700;
-            color: #FFD700;
-            text-align: center;
-            display: block;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-
-        /* Área dos controles nos 15% inferiores */
-        .controles-area {
-            width: 100%;
-            height: 15dvh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            padding: 0 15px;
-        }
-
-        /* --- BOTÕES --- */
-        .btn-acao {
-            background: linear-gradient(135deg, #ff0055, #cc0000);
-            color: #ffffff;
-            padding: 14px 28px;
             font-size: 0.95rem;
-            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: #a0a0a0;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 290px;
+        }
+
+        .btn-abrir {
+            background: linear-gradient(135deg, #d4af37 0%, #aa8214 100%);
+            color: #0d0d0d;
+            padding: 16px 36px;
+            font-size: 0.85rem;
             font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.35);
             transition: transform 0.2s, box-shadow 0.2s;
-            letter-spacing: 0.5px;
         }
 
-        .btn-acao:active {
-            transform: scale(0.95);
+        .btn-abrir:active {
+            transform: scale(0.96);
         }
 
-        .btn-controle {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            padding: 10px 20px;
-            font-size: 0.8rem;
-            font-family: 'Montserrat', sans-serif;
+        /* TELA PRINCIPAL CINEMATOGRÁFICA */
+        #tela-principal {
+            position: fixed;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
+            overflow: hidden;
+        }
+
+        /* Background com Zoom Contínuo */
+        .foto-bg-container {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .foto-bg {
+            width: 100%;
+            height: 100%;
+            background-image: url('foto.jpg');
+            background-size: cover;
+            background-position: center 20%;
+            animation: kenBurns 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.12); }
+        }
+
+        /* Degradê invisível para preservar rosto da Samara */
+        .scrim-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.2) 0%,
+                rgba(0, 0, 0, 0) 35%,
+                rgba(0, 0, 0, 0.4) 60%,
+                rgba(0, 0, 0, 0.95) 90%
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Container de Legendas Dinâmicas */
+        .interface-conteudo {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px 20px 30px;
+        }
+
+        .bloco-frases {
+            min-height: 140px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .frase-slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .frase-slide.ativa {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .frase-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: #d4af37;
+            margin-bottom: 8px;
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 50px;
-            cursor: pointer;
+        }
+
+        .frase-texto {
+            font-size: 0.92rem;
+            font-weight: 400;
+            line-height: 1.55;
+            color: #f0f0f0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
+        /* Barra de Progresso do Story */
+        .barra-progresso {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        .progresso-ponto {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progresso-fill {
+            height: 100%;
+            width: 0%;
+            background: #d4af37;
+            transition: width 0.1s linear;
+        }
+
+        /* Controles de Áudio Minimalistas */
+        .controles-player {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-ctrl {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 10px 22px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            border-radius: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             transition: background 0.2s;
         }
 
-        .btn-controle:active {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .card-mensagem::-webkit-scrollbar {
-            width: 4px;
-        }
-        .card-mensagem::-webkit-scrollbar-thumb {
-            background: rgba(255, 215, 0, 0.5);
-            border-radius: 4px;
+        .btn-ctrl:active {
+            background: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. TELA DE ENTRADA (SURPRESA) -->
+    <!-- TELA 1: INTRODUÇÃO -->
     <div id="tela-intro">
-        <h2>Samara ❤️</h2>
-        <p>Clique no botão abaixo e prepare-se para uma surpresa emocionante!</p>
-        <button class="btn-acao" onclick="revelarSurpresa()">✨ Abrir Surpresa ✨</button>
+        <span class="intro-tag">Uma Homenagem Especial</span>
+        <h2>Para Samara</h2>
+        <p>Um presente feito para celebrar cada passo da sua linda caminhada.</p>
+        <button class="btn-abrir" onclick="iniciarExperiencia()">Ouvir Homenagem</button>
     </div>
 
-    <!-- 2. TELA PRINCIPAL -->
+    <!-- TELA 2: EXPERIÊNCIA CINEMATOGRÁFICA -->
     <div id="tela-principal">
-        <div class="foto-container">
-            <img src="foto.jpg" class="foto-destaque" alt="Foto da Samara na Corrida">
-            
-            <div class="card-mensagem">
-                <h1>Feliz aniversário, minha filha! ❤️🏃‍♀️</h1>
-                <p>Hoje celebro a vida da pessoa que me ensina todos os dias o verdadeiro significado do amor. Tenho tanto orgulho da mulher que você se tornou: forte, determinada, corajosa e cheia de sonhos.</p>
-                <p>Que a vida continue sendo como uma corrida: que você nunca tenha medo dos desafios, que saiba aproveitar cada passo do caminho e, mesmo quando estiver cansada, encontre forças para continuar. E quando chegar ao seu objetivo, que olhe para trás e perceba o quanto foi capaz de conquistar.</p>
-                <p>Estarei sempre aqui, na primeira fila, torcendo por você, vibrando a cada vitória e segurando sua mão nos momentos difíceis. Porque, como mãe, meu maior desejo é ver você feliz e realizando tudo aquilo que seu coração sonha.</p>
-                <p>Que Deus abençoe seus passos, seus caminhos e cada quilômetro da sua vida. Que nunca faltem saúde, amor, alegria e motivos para sorrir.</p>
-                <p>Que você continue correndo atrás dos seus sonhos e que a vida seja sempre uma linda jornada. 🥰❤️🏃‍♀️</p>
-                <span class="destaque-final">Te amo mais do que qualquer palavra poderia explicar!</span>
-            </div>
+        <div class="foto-bg-container">
+            <div class="foto-bg"></div>
+            <div class="scrim-overlay"></div>
         </div>
 
-        <div class="controles-area">
-            <button id="btn-pausar" class="btn-controle" onclick="pausarTocar()">⏸ Pausar</button>
-            <button class="btn-controle" onclick="proximaMusica()">⏭ Próxima</button>
+        <div class="interface-conteudo">
+            <!-- Barra de Progresso Superior das Mensagens -->
+            <div class="barra-progresso">
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-0"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-1"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-2"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-3"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-4"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-5"></div></div>
+            </div>
+
+            <!-- Slides das Frases (Sem tapar a foto) -->
+            <div class="bloco-frases">
+                <div class="frase-slide ativa" id="slide-0">
+                    <h3 class="frase-titulo">Feliz Aniversário</h3>
+                    <p class="frase-texto">Hoje celebro a vida de quem me ensina todos os dias o significado do amor. Que orgulho da mulher forte e cheia de sonhos que você se tornou.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-1">
+                    <h3 class="frase-titulo">Sua Corrida</h3>
+                    <p class="frase-texto">Que a vida continue como uma maratona: nunca tema desafios, aproveite cada passo e encontre forças mesmo no cansaço.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-2">
+                    <h3 class="frase-titulo">Suas Vitórias</h3>
+                    <p class="frase-texto">E ao cruzar cada linha de chegada, olhe para trás com orgulho de tudo o que foi capaz de conquistar.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-3">
+                    <h3 class="frase-titulo">Sempre na Primeira Fila</h3>
+                    <p class="frase-texto">Estarei sempre aplaudindo suas vitórias e segurando sua mão nos momentos difíceis. Meu maior desejo é ver você realizar tudo.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-4">
+                    <h3 class="frase-titulo">Bênçãos no seu Caminho</h3>
+                    <p class="frase-texto">Que Deus abençoe seus passos, sua estrada e cada quilômetro da sua vida com saúde, alegria e amor.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-5">
+                    <h3 class="frase-titulo">Amor Infinito</h3>
+                    <p class="frase-texto">Continue correndo atrás dos seus sonhos. Te amo mais do que qualquer palavra poderia explicar!</p>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controles-player">
+                <button id="btn-pausar" class="btn-ctrl" onclick="togglePause()">Pausar</button>
+                <button class="btn-ctrl" onclick="proximoSlide()">Avançar ❯</button>
+            </div>
         </div>
     </div>
 
     <audio id="meu-audio"></audio>
 
     <script>
-        var playlist = [
-            'musica1.mp3',
-            'musica2.mp3',
-            'musica3.mp3'
-        ];
-        
+        var playlist = ['musica1.mp3', 'musica2.mp3', 'musica3.mp3'];
         var faixaAtual = 0;
-        var tocando = false;
+        var slideAtual = 0;
+        var totalSlides = 6;
+        var tempoPorSlideMs = 7000;
+        var intervaloSlide = null;
         var audio = document.getElementById('meu-audio');
+        var tocando = false;
 
-        function revelarSurpresa() {
-            var elementoDaPagina = document.documentElement;
-
-            if (elementoDaPagina.requestFullscreen) {
-                elementoDaPagina.requestFullscreen();
-            } else if (elementoDaPagina.webkitRequestFullscreen) {
-                elementoDaPagina.webkitRequestFullscreen();
-            }
+        function iniciarExperiencia() {
+            var el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 
             audio.src = playlist[faixaAtual];
             audio.play();
@@ -253,39 +338,69 @@
 
             var intro = document.getElementById('tela-intro');
             var principal = document.getElementById('tela-principal');
-            
             intro.style.opacity = '0';
             intro.style.visibility = 'hidden';
-
             principal.style.visibility = 'visible';
             principal.style.opacity = '1';
+
+            iniciarLoopSlides();
         }
 
-        function proximaMusica() {
-            faixaAtual++;
-            if (faixaAtual >= playlist.length) {
-                faixaAtual = 0;
+        function exibirSlide(index) {
+            for (var i = 0; i < totalSlides; i++) {
+                var s = document.getElementById('slide-' + i);
+                var f = document.getElementById('fill-' + i);
+                if (s) s.classList.remove('ativa');
+                if (f) f.style.width = i < index ? '100%' : '0%';
             }
-            audio.src = playlist[faixaAtual];
-            audio.play();
-            tocando = true;
-            document.getElementById('btn-pausar').innerText = "⏸ Pausar";
+
+            var slideAlvo = document.getElementById('slide-' + index);
+            var fillAlvo = document.getElementById('fill-' + index);
+            if (slideAlvo) slideAlvo.classList.add('ativa');
+            if (fillAlvo) fillAlvo.style.width = '100%';
+
+            slideAtual = index;
         }
 
-        function pausarTocar() {
-            var btnPausar = document.getElementById('btn-pausar');
+        function proximoSlide() {
+            var proximo = (slideAtual + 1) % totalSlides;
+            exibirSlide(proximo);
+            reiniciarTimer();
+        }
+
+        function iniciarLoopSlides() {
+            exibirSlide(0);
+            reiniciarTimer();
+        }
+
+        function reiniciarTimer() {
+            if (intervaloSlide) clearInterval(intervaloSlide);
+            intervaloSlide = setInterval(function() {
+                var proximo = (slideAtual + 1) % totalSlides;
+                exibirSlide(proximo);
+            }, tempoPorSlideMs);
+        }
+
+        function togglePause() {
+            var btn = document.getElementById('btn-pausar');
             if (tocando) {
                 audio.pause();
                 tocando = false;
-                btnPausar.innerText = "▶ Tocar";
+                btn.innerText = 'Tocar';
+                clearInterval(intervaloSlide);
             } else {
                 audio.play();
                 tocando = true;
-                btnPausar.innerText = "⏸ Pausar";
+                btn.innerText = 'Pausar';
+                reiniciarTimer();
             }
         }
 
-        audio.addEventListener('ended', proximaMusica);
+        audio.addEventListener('ended', function() {
+            faixaAtual = (faixaAtual + 1) % playlist.length;
+            audio.src = playlist[faixaAtual];
+            audio.play();
+        });
     </script>
 </body>
 </html>
