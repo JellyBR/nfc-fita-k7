@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mariana ❤️</title>
+    <title>Para Samara ❤️</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,7 +92,7 @@
             border-radius: 14px;
         }
 
-        /* Cartão translúcido sobre a imagem para garantir leitura perfeita */
+        /* Cartão translúcido sobre a imagem */
         .card-mensagem {
             position: absolute;
             bottom: 16px;
@@ -185,7 +185,6 @@
             background: rgba(255, 255, 255, 0.25);
         }
 
-        /* Customização da barra de rolagem do texto */
         .card-mensagem::-webkit-scrollbar {
             width: 4px;
         }
@@ -197,15 +196,17 @@
 </head>
 <body>
 
+    <!-- 1. TELA DE ENTRADA (SURPRESA) -->
     <div id="tela-intro">
-        <h2>Mariana ❤️</h2>
+        <h2>Samara ❤️</h2>
         <p>Clique no botão abaixo e prepare-se para uma surpresa emocionante!</p>
         <button class="btn-acao" onclick="revelarSurpresa()">✨ Abrir Surpresa ✨</button>
     </div>
 
+    <!-- 2. TELA PRINCIPAL -->
     <div id="tela-principal">
         <div class="foto-container">
-            <img src="foto.jpg" class="foto-destaque" alt="Foto da Mariana na Corrida">
+            <img src="foto.jpg" class="foto-destaque" alt="Foto da Samara na Corrida">
             
             <div class="card-mensagem">
                 <h1>Feliz aniversário, minha filha! ❤️🏃‍♀️</h1>
@@ -227,7 +228,6 @@
     <audio id="meu-audio"></audio>
 
     <script>
-        // LISTA DE MÚSICAS DA PLAYLIST
         var playlist = [
             'musica1.mp3',
             'musica2.mp3',
@@ -241,19 +241,16 @@
         function revelarSurpresa() {
             var elementoDaPagina = document.documentElement;
 
-            // Solicita tela cheia
             if (elementoDaPagina.requestFullscreen) {
                 elementoDaPagina.requestFullscreen();
             } else if (elementoDaPagina.webkitRequestFullscreen) {
                 elementoDaPagina.webkitRequestFullscreen();
             }
 
-            // Inicia o áudio
             audio.src = playlist[faixaAtual];
             audio.play();
             tocando = true;
 
-            // Transição suave entre as telas
             var intro = document.getElementById('tela-intro');
             var principal = document.getElementById('tela-principal');
             
