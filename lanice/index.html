@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Lanice</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* Fundo azul profundo remetendo ao manto de Nossa Senhora */
+            background-color: #070a14;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        /* TELA INTRODUÇÃO */
+        #tela-intro {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #131b33 0%, #070a14 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            z-index: 50;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+        }
+
+        .intro-tag {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        #tela-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 40%, #c4a760 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #tela-intro p {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: #b5c0d6;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            max-width: 280px;
+        }
+
+        .btn-abrir {
+            background: linear-gradient(135deg, #d4af37 0%, #aa8214 100%);
+            color: #0d0d0d;
+            padding: 16px 36px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+            transition: transform 0.2s;
+        }
+
+        .btn-abrir:active {
+            transform: scale(0.96);
+        }
+
+        /* TELA PRINCIPAL */
+        #tela-principal {
+            position: fixed;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* VÍDEO DE FUNDO */
+        #meu-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            /* Em pé: ajusta para não cortar o vídeo */
+            object-fit: contain; 
+            z-index: 1;
+            background-color: #070a14;
+        }
+
+        /* Quando o celular estiver deitado (Landscape) */
+        @media (orientation: landscape) {
+            #meu-video {
+                /* Deitado: preenche a tela toda */
+                object-fit: cover; 
+            }
+        }
+
+        /* Degradê para garantir leitura dos textos */
+        .scrim-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(7, 10, 20, 0) 0%,
+                rgba(7, 10, 20, 0.2) 40%,
+                rgba(7, 10, 20, 0.7) 70%,
+                rgba(7, 10, 20, 0.95) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* INTERFACE */
+        .interface-conteudo {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px 20px 30px;
+            width: 100%;
+        }
+
+        .bloco-frases {
+            min-height: 135px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .frase-slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .frase-slide.ativa {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .frase-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: #d4af37;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .frase-texto {
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.55;
+            color: #f5f5f5;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .barra-progresso {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 22px;
+            padding: 0 10px;
+        }
+
+        .progresso-ponto {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progresso-fill {
+            height: 100%;
+            width: 0%;
+            background: #d4af37;
+            transition: width 0.1s linear;
+        }
+
+        .controles-player {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-ctrl {
+            background: rgba(20, 20, 20, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            padding: 10px 22px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-ctrl:active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="tela-intro">
+        <span class="intro-tag">Uma Homenagem Especial</span>
+        <h2>Para Lanice</h2>
+        <p>Um presente de luz e fé, feito para celebrar a sua vida.</p>
+        <button class="btn-abrir" onclick="iniciarExperiencia()">Abrir Homenagem</button>
+    </div>
+
+    <div id="tela-principal">
+        <!-- O atributo playsinline é vital para funcionar no iPhone sem abrir o player nativo -->
+        <video id="meu-video" src="video.mp4" loop playsinline preload="auto"></video>
+        
+        <div class="scrim-overlay"></div>
+
+        <div class="interface-conteudo">
+            <div class="barra-progresso">
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-0"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-1"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-2"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-3"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-4"></div></div>
+                <div class="progresso-ponto"><div class="progresso-fill" id="fill-5"></div></div>
+            </div>
+
+            <div class="bloco-frases">
+                <div class="frase-slide ativa" id="slide-0">
+                    <h3 class="frase-titulo">Sob o Manto Sagrado</h3>
+                    <p class="frase-texto">Lanice, que a paz e a proteção de Nossa Senhora Aparecida cubram sua vida todos os dias.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-1">
+                    <h3 class="frase-titulo">Luz no Caminho</h3>
+                    <p class="frase-texto">Assim como a fé ilumina a escuridão, que seus passos sejam sempre guiados por sabedoria e amor.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-2">
+                    <h3 class="frase-titulo">Força e Devoção</h3>
+                    <p class="frase-texto">Sua força diária e seu coração bom são reflexos da sua fé inabalável.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-3">
+                    <h3 class="frase-titulo">Amparo de Mãe</h3>
+                    <p class="frase-texto">Nos momentos de alegria ou de provação, lembre-se: o colo e o amor de Maria nunca falham.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-4">
+                    <h3 class="frase-titulo">Bênçãos Infinitas</h3>
+                    <p class="frase-texto">Que cada amanhecer traga saúde, paz e milagres para a sua vida e para aqueles que você ama.</p>
+                </div>
+
+                <div class="frase-slide" id="slide-5">
+                    <h3 class="frase-titulo">Graça e Luz</h3>
+                    <p class="frase-texto">Feliz vida, Lanice! Que Nossa Senhora interceda sempre pelos seus mais lindos sonhos.</p>
+                </div>
+            </div>
+
+            <div class="controles-player">
+                <button id="btn-pausar" class="btn-ctrl" onclick="togglePause()">Pausar</button>
+                <button class="btn-ctrl" onclick="proximoSlide()">Avançar ❯</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var slideAtual = 0;
+        var totalSlides = 6;
+        var tempoPorSlideMs = 7000;
+        var intervaloSlide = null;
+        var video = document.getElementById('meu-video');
+        var tocando = false;
+
+        function iniciarExperiencia() {
+            // Tenta forçar tela cheia
+            var el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+
+            // Inicia o vídeo (que já contém o áudio)
+            video.play().catch(function(error) {
+                console.log("Erro ao reproduzir o vídeo:", error);
+            });
+            tocando = true;
+
+            var intro = document.getElementById('tela-intro');
+            var principal = document.getElementById('tela-principal');
+            intro.style.opacity = '0';
+            intro.style.visibility = 'hidden';
+            principal.style.visibility = 'visible';
+            principal.style.opacity = '1';
+
+            iniciarLoopSlides();
+        }
+
+        function exibirSlide(index) {
+            for (var i = 0; i < totalSlides; i++) {
+                var s = document.getElementById('slide-' + i);
+                var f = document.getElementById('fill-' + i);
+                if (s) s.classList.remove('ativa');
+                if (f) f.style.width = i < index ? '100%' : '0%';
+            }
+
+            var slideAlvo = document.getElementById('slide-' + index);
+            var fillAlvo = document.getElementById('fill-' + index);
+            if (slideAlvo) slideAlvo.classList.add('ativa');
+            if (fillAlvo) fillAlvo.style.width = '100%';
+
+            slideAtual = index;
+        }
+
+        function proximoSlide() {
+            var proximo = (slideAtual + 1) % totalSlides;
+            exibirSlide(proximo);
+            reiniciarTimer();
+        }
+
+        function iniciarLoopSlides() {
+            exibirSlide(0);
+            reiniciarTimer();
+        }
+
+        function reiniciarTimer() {
+            if (intervaloSlide) clearInterval(intervaloSlide);
+            intervaloSlide = setInterval(function() {
+                var proximo = (slideAtual + 1) % totalSlides;
+                exibirSlide(proximo);
+            }, tempoPorSlideMs);
+        }
+
+        function togglePause() {
+            var btn = document.getElementById('btn-pausar');
+            if (tocando) {
+                video.pause();
+                tocando = false;
+                btn.innerText = 'Tocar';
+                clearInterval(intervaloSlide); // Pausa a transição das frases
+            } else {
+                video.play();
+                tocando = true;
+                btn.innerText = 'Pausar';
+                reiniciarTimer(); // Retoma a transição das frases
+            }
+        }
+    </script>
+</body>
+</html>
