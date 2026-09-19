@@ -18,7 +18,6 @@
         }
 
         body {
-            /* Fundo azul profundo remetendo ao manto de Nossa Senhora */
             background-color: #070a14;
             height: 100vh;
             height: 100dvh;
@@ -106,49 +105,89 @@
             justify-content: flex-end;
         }
 
-        /* VÍDEO DE FUNDO */
+        /* EFEITO AMBIENT MODE (BORRADO NO FUNDO) */
+        #video-blur {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: blur(45px) brightness(0.6);
+            transform: scale(1.15); /* Evita bordas brancas no blur */
+            pointer-events: none;
+        }
+
+        /* VÍDEO PRINCIPAL */
         #meu-video {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            /* Em pé: ajusta para não cortar o vídeo */
             object-fit: contain; 
             z-index: 1;
-            background-color: #070a14;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* Quando o celular estiver deitado (Landscape) */
         @media (orientation: landscape) {
             #meu-video {
-                /* Deitado: preenche a tela toda */
                 object-fit: cover; 
+            }
+            #video-blur {
+                display: none; /* Não precisa de blur no modo deitado */
+            }
+            .topo-decorativo {
+                display: none;
             }
         }
 
-        /* Degradê para garantir leitura dos textos */
+        /* DEGRADÊ PARA TEXTOS NA BASE */
         .scrim-overlay {
             position: absolute;
-            inset: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
             background: linear-gradient(
                 to bottom,
                 rgba(7, 10, 20, 0) 0%,
-                rgba(7, 10, 20, 0.2) 40%,
-                rgba(7, 10, 20, 0.7) 70%,
-                rgba(7, 10, 20, 0.95) 100%
+                rgba(7, 10, 20, 0.4) 40%,
+                rgba(7, 10, 20, 0.85) 75%,
+                rgba(7, 10, 20, 1) 100%
             );
             z-index: 2;
             pointer-events: none;
         }
 
-        /* INTERFACE */
+        /* CABEÇALHO ELEGANTE NO TOPO */
+        .topo-decorativo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 35px 20px 20px;
+            z-index: 3;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(7, 10, 20, 0.7) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .topo-decorativo span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        /* INTERFACE BASE */
         .interface-conteudo {
             position: relative;
             z-index: 3;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 24px 20px 30px;
+            padding: 24px 20px 35px;
             width: 100%;
         }
 
@@ -252,9 +291,17 @@
     </div>
 
     <div id="tela-principal">
-        <!-- O atributo playsinline é vital para funcionar no iPhone sem abrir o player nativo -->
+        <!-- VÍDEO DE FUNDO (AMBIENT BLUR) - Mudo para não dar eco -->
+        <video id="video-blur" src="video.mp4" loop muted playsinline preload="auto"></video>
+        
+        <!-- VÍDEO PRINCIPAL (FOCADO NO CENTRO) -->
         <video id="meu-video" src="video.mp4" loop playsinline preload="auto"></video>
         
+        <!-- CABEÇALHO ELEGANTE -->
+        <div class="topo-decorativo">
+            <span>Homenagem • Lanice</span>
+        </div>
+
         <div class="scrim-overlay"></div>
 
         <div class="interface-conteudo">
@@ -272,27 +319,22 @@
                     <h3 class="frase-titulo">Sob o Manto Sagrado</h3>
                     <p class="frase-texto">Lanice, que a paz e a proteção de Nossa Senhora Aparecida cubram sua vida todos os dias.</p>
                 </div>
-
                 <div class="frase-slide" id="slide-1">
                     <h3 class="frase-titulo">Luz no Caminho</h3>
                     <p class="frase-texto">Assim como a fé ilumina a escuridão, que seus passos sejam sempre guiados por sabedoria e amor.</p>
                 </div>
-
                 <div class="frase-slide" id="slide-2">
                     <h3 class="frase-titulo">Força e Devoção</h3>
                     <p class="frase-texto">Sua força diária e seu coração bom são reflexos da sua fé inabalável.</p>
                 </div>
-
                 <div class="frase-slide" id="slide-3">
                     <h3 class="frase-titulo">Amparo de Mãe</h3>
                     <p class="frase-texto">Nos momentos de alegria ou de provação, lembre-se: o colo e o amor de Maria nunca falham.</p>
                 </div>
-
                 <div class="frase-slide" id="slide-4">
                     <h3 class="frase-titulo">Bênçãos Infinitas</h3>
                     <p class="frase-texto">Que cada amanhecer traga saúde, paz e milagres para a sua vida e para aqueles que você ama.</p>
                 </div>
-
                 <div class="frase-slide" id="slide-5">
                     <h3 class="frase-titulo">Graça e Luz</h3>
                     <p class="frase-texto">Feliz vida, Lanice! Que Nossa Senhora interceda sempre pelos seus mais lindos sonhos.</p>
@@ -311,19 +353,19 @@
         var totalSlides = 6;
         var tempoPorSlideMs = 7000;
         var intervaloSlide = null;
-        var video = document.getElementById('meu-video');
+        
+        var videoMain = document.getElementById('meu-video');
+        var videoBlur = document.getElementById('video-blur');
         var tocando = false;
 
         function iniciarExperiencia() {
-            // Tenta forçar tela cheia
             var el = document.documentElement;
             if (el.requestFullscreen) el.requestFullscreen();
             else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 
-            // Inicia o vídeo (que já contém o áudio)
-            video.play().catch(function(error) {
-                console.log("Erro ao reproduzir o vídeo:", error);
-            });
+            // Sincroniza e toca os dois vídeos
+            videoMain.play().catch(function(e) { console.log(e); });
+            videoBlur.play().catch(function(e) { console.log(e); });
             tocando = true;
 
             var intro = document.getElementById('tela-intro');
@@ -374,15 +416,17 @@
         function togglePause() {
             var btn = document.getElementById('btn-pausar');
             if (tocando) {
-                video.pause();
+                videoMain.pause();
+                videoBlur.pause();
                 tocando = false;
                 btn.innerText = 'Tocar';
-                clearInterval(intervaloSlide); // Pausa a transição das frases
+                clearInterval(intervaloSlide);
             } else {
-                video.play();
+                videoMain.play();
+                videoBlur.play();
                 tocando = true;
                 btn.innerText = 'Pausar';
-                reiniciarTimer(); // Retoma a transição das frases
+                reiniciarTimer();
             }
         }
     </script>
